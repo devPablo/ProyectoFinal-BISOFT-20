@@ -1,0 +1,8 @@
+.country {
+    fill: #F2F2F2;
+}
+
+.country:hover {
+    fill: #80CBC4;
+    cursor: crosshair;
+}
