@@ -1,3 +1,9 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
 .country {
     fill: #F2F2F2;
 }
@@ -27,4 +33,68 @@
 
 .vertexForm::selection {
     background-color: transparent;
+}
+
+.edge {
+    stroke: #171820;
+    stroke-width: 3;
+}
+
+.bidirectional {
+    stroke: red;
+}
+
+/* Edge Form */
+#edgeForm {
+    position: absolute;
+    display: inline-block;
+    background-color: #34353d;
+    padding: 35px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
+#edgeForm input {
+    padding: 10px;
+    outline: 0;
+    font-size: 20px;
+    border-radius: 4px;
+    border: 0;
+}
+
+.lbl {
+    font-size: 18px;
+    color: #FFF;
+    position: absolute;
+    top: 10px;
+}
+
+#divDirection {
+    text-align: center;
+    margin: 20px 10px 0px 10px;
+}
+
+.direction {
+    width: 40%;
+    display: inline-block;
+    text-align: center;
+}
+
+.fas {
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 50%;
+    background-color: #FFF;
+    transition: ease .3s;
+    cursor: pointer;
+}
+
+.fas:hover {
+    background-color: #BEBEBE;
+}
+
+.fa-arrows-alt-h {
+    color: red;
 }
