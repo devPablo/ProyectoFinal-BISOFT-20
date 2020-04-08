@@ -27,7 +27,15 @@ showAdjancencies.addEventListener('click', () => {
     }
 });
 
-
+document.querySelector('body').addEventListener('keydown', (e) => {
+    if (e.key == 'Escape') {
+        if (edgeForm.style.display == 'inline-block') {
+            closeEdgeForm();
+        }
+        closeAdjacencyForm();
+        
+    }
+});
 
 for (let i = 0; i < 2; i++) {
     directions[i].addEventListener('click', (e) => {
@@ -128,15 +136,15 @@ function showEdgeForm() {
 
 function closeEdgeForm() {
     edgeForm.style.display = 'none';
+    resetDirectionSelected();
+    inputCost.value = '';
+    selectedVertex = [];
 }
 
 function executeBtnCreateEdge() {
     let cost = inputCost.value;
     let bidirectional = (document.querySelectorAll('.direction')[1].childNodes[0].getAttribute('selected'));
     createEdge(selectedVertex[0], selectedVertex[1], cost, bidirectional);
-    selectedVertex = [];
-    inputCost.value = '';
-    resetDirectionSelected();
     closeEdgeForm();
 }
 
@@ -171,7 +179,6 @@ function getAdjacencies(country) {
 function filterAdjacency(country) {
     let adjacencies = getAdjacencies(country);
     let nameAdjacencyList = buildNameAdjacencyList(adjacencies);
-    console.log(nameAdjacencyList);
 
     // Remove vertex
     environment.childNodes.forEach(e => {
@@ -184,7 +191,6 @@ function filterAdjacency(country) {
     // Remove SVG line
     for (let i = 0; i < svg.childNodes.length; i++) {
         if (svg.childNodes[i].tagName == 'line') {
-            let connectionList = svg.childNodes[i].getAttribute('connections').split(';');
             if (svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0] != country) {
                 svg.childNodes[i].style.display = 'none';
             }
