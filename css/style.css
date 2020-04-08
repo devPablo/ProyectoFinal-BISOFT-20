@@ -127,3 +127,82 @@ body {
     text-align: center;
     margin-top: 50px;
 }
+
+/* Adjacency Form */
+#adjacencyForm {
+    position: absolute;
+    display: none;
+    background-color: #34353d;
+    padding: 35px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
+#adjacencyForm input {
+    padding: 10px;
+    outline: 0;
+    font-size: 20px;
+    border-radius: 4px;
+    border: 0;
+}
+
+#countryAdjacency {
+    position: absolute;
+    width: 100%;
+}
+
+#countryAdjacency button {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    border: 2px solid #26A69A;
+    color: #26A69A;
+    padding: 10px 30px;
+    transition: ease .3s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.disable {
+    color: #E53935 !important;
+    border: 2px solid #E53935 !important;
+}
+
+.disable:hover {
+    background-color: #E53935 !important;
+    color: #FFF !important;
+}
+
+#countryAdjacency button:hover {
+    background-color: #26A69A;
+    color: #FFF;
+}
+
+#btnShowAdjacencies {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    border: 2px solid #26A69A;
+    color: #26A69A;
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: ease .3s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+#btnShowAdjacencies:hover {
+    background-color: #26A69A;
+    color: #FFF;
+}
+
+#divBtnShowAdjacencies {
+    text-align: center;
+    margin-top: 50px;
+}

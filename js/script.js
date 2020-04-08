@@ -3,11 +3,32 @@ let paths = Array.from(svg.getElementsByTagName("path"));
 const environment = document.querySelector('#environment');
 const edgeForm = document.querySelector('#edgeForm');
 const btnCreateEdge = document.querySelector('#btnCreateEdge');
+
+/* FLAGS */
+let FLAG_ADJACENCIES = false;
+
 btnCreateEdge.addEventListener('click', () => {
     executeBtnCreateEdge();
 });
 const inputCost = document.querySelector('#inputCost');
 const directions = document.querySelectorAll('.direction');
+const adjacencyForm = document.querySelector('#adjacencyForm');
+const btnShowAdjacencies = document.querySelector('#btnShowAdjacencies');
+btnShowAdjacencies.addEventListener('click', () => {
+    filterAdjacency(document.querySelector('#inputAdjacencyCountry').value);
+    closeAdjacencyForm();
+});
+const showAdjancencies = document.querySelector('#showAdjacencies');
+showAdjancencies.addEventListener('click', () => {
+    if (FLAG_ADJACENCIES) {
+        showAllMap();
+    } else {
+        showAdjacencyForm();
+    }
+});
+
+
+
 for (let i = 0; i < 2; i++) {
     directions[i].addEventListener('click', (e) => {
         e = e.target;
@@ -169,10 +190,42 @@ function filterAdjacency(country) {
             }
         }
     }
+
+    FLAG_ADJACENCIES = true;
+    showAdjancencies.classList.add('disable');
+    showAdjancencies.innerText = 'Quit Adjacencies';
 }
 
 function buildNameAdjacencyList(adjacencies) {
     let data = [];
     adjacencies.forEach(e => { data.push(e[0]) });
     return data;
+}
+
+/* Show Adjacency Form */ 
+function showAdjacencyForm() {
+    adjacencyForm.style.display = 'inline-block';
+    document.querySelector('#inputAdjacencyCountry').focus();
+}
+
+function closeAdjacencyForm() {
+    document.querySelector('#inputAdjacencyCountry').value = '';
+    adjacencyForm.style.display = 'none';
+}
+
+/* Show Entire Map (Vertex & Edge) */
+function showAllMap() {
+    FLAG_ADJACENCIES = false;
+    showAdjancencies.classList.remove('disable');
+    showAdjancencies.innerText = 'Show Adjacencies';
+
+    environment.childNodes.forEach(e => {
+        e.style.display = 'inline-block';
+    });
+
+    svg.childNodes.forEach(e => {
+        if (e.tagName == 'path' || e.tagName == 'line') {
+            e.style.display = 'inline-block';
+        }
+    });
 }
