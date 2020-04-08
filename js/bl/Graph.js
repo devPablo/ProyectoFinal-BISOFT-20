@@ -5,7 +5,7 @@ class Graph {
     constructor(pnVertices) 
     { 
         this.nVertices =  pnVertices
-        this.locations = new Map();
+        this.locations = new HashMapClose([],[]);
     }
     getNVertices(){
         return this.nVertices;
@@ -42,12 +42,12 @@ class Graph {
     valNewEdge(overtice, dvertice){
         //Validamos que la lista de aristas no esté vacía para no tener
         //que recorrer el for innecesariamente
-        if(!this.getLocations().get(overtice).length == 0){
+        if(!this.getLocations().get(overtice).getEdge().length == 0){
             //Iteramos por las aristas de nuestro vertice de origen
-            for (let i = 0; i < this.getLocations().get(overtice).length; i++){
+            for (let i = 0; i < this.getLocations().get(overtice).getEdge().length; i++){
                 //Si existe una arista de nuestro vertice de origen igual a la que 
                 //se envia por parametro retornamos true (ya existe)
-                if (this.getLocations().get(overtice)[i].getEdge() == dvertice){
+                if (this.getLocations().get(overtice).getEdge()[i].getEdge() == dvertice){
                     return true;
                 }
             }
@@ -63,29 +63,29 @@ class Graph {
     addEdge(overtice, dvertice, pcost, pflat){
         var edge = new Edge(dvertice, pcost);
         if (pflat == true){
-            this.getLocations().get(overtice).push(edge);
+            this.getLocations().push(overtice, edge);
             var edge = new Edge(overtice, pcost);
-            this.getLocations().get(dvertice).push(edge);
+            this.getLocations().push(dvertice, edge);
         }else{
-            this.getLocations().get(overtice).push(edge);
+            this.getLocations().push(overtice, edge);
         }
     }
 
     //Esta función es para testear el grafo
     printGraph() { 
         //Itero los vertices
-        for (var i of this.getLocations().keys())  {  
+        for (let i=0; i<this.getLocations().keys().length; i++)  {  
             //Inicializo el string que guardará la info
             var conc = ""; 
   
             //Obtengo las atistas de los vertices e
             //itero a traves de ellas
-            for (var j of this.getLocations().get(i))
+            for (var j of this.getLocations().get(this.getLocations().keys()[i]).getEdge())
                 //j = [edge, edge, edge] 
                 conc += " Vertice destino: " + j.getEdge() + ", Costo: " + j.getCost(); 
   
             // print the vertex and its adjacency list 
-            console.log("Vertice origen: " + i + " ---> " + conc); 
+            console.log("Vertice origen: " + this.getLocations().getKeys()[i] + " ---> " + conc); 
         }
     } 
     

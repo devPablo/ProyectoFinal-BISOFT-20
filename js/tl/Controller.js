@@ -9,7 +9,7 @@ class Controller {
     }
 
     setGraph(pgraph){
-        this.graph = pgraph;
+        this.graph = pgraph; 
     }
 
     //True: Se añadió, False: Ya existe y no se añadió
@@ -35,5 +35,5 @@ class Controller {
 
     print(){
         this.getGraph().printGraph();
-    }
+    } 
 }
