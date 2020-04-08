@@ -65,7 +65,7 @@ function checkCreateEdge() {
 function createEdge(source, destination, cost, bidirectional) {
     let line;
     let connections = source.innerText + ',' + destination.innerText + ';';
-    if (bidirectional == true) {
+    if (bidirectional == 'true') {
         console.log('in');
         connections = source.innerText + ',' + destination.innerText + ';' + '' + destination.innerText + ',' + source.innerText + ';';
         line = `<line class="edge bidirectional" x1="${parseInt(source.getAttribute('x'))}" y1="${parseInt(source.getAttribute('y'))}" x2="${parseInt(destination.getAttribute('x'))}" y2="${parseInt(destination.getAttribute('y'))}" cost="${cost}" connections="${connections}" />`
