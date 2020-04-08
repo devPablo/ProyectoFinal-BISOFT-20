@@ -87,7 +87,9 @@ function updatePathsListener() {
         e.classList.add('country');
         e.addEventListener('click', (x) => {
             let ele = x.target;
-            createVertex(x.x, x.y, ele);
+            if (selectedCountries.length < 25) {
+                createVertex(x.x, x.y, ele);
+            }
         });
     });
 }
