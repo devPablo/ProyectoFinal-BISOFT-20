@@ -33,8 +33,8 @@ function createVertex(x, y, ele) {
     if (!repeated) {
         let div = document.createElement('div');
         div.classList.add('vertexForm');
-        div.style.top = y-20;
-        div.style.left = x-20;
+        div.style.top = y - 20;
+        div.style.left = x - 20;
         div.innerText = ele.getAttribute('data-id');
 
         div.setAttribute('x', x);
@@ -66,10 +66,9 @@ function createEdge(source, destination, cost, bidirectional) {
     let line;
     let connections = source.innerText + ',' + destination.innerText + ';';
     if (bidirectional == 'true') {
-        console.log('in');
         connections = source.innerText + ',' + destination.innerText + ';' + '' + destination.innerText + ',' + source.innerText + ';';
         line = `<line class="edge bidirectional" x1="${parseInt(source.getAttribute('x'))}" y1="${parseInt(source.getAttribute('y'))}" x2="${parseInt(destination.getAttribute('x'))}" y2="${parseInt(destination.getAttribute('y'))}" cost="${cost}" connections="${connections}" />`
-    } else {        
+    } else {
         line = `<line class="edge" x1="${parseInt(source.getAttribute('x'))}" y1="${parseInt(source.getAttribute('y'))}" x2="${parseInt(destination.getAttribute('x'))}" y2="${parseInt(destination.getAttribute('y'))}" cost="${cost}" connections="${connections}" />`
     }
     svg.innerHTML += line;
@@ -125,4 +124,55 @@ function resetDirectionSelected() {
     directions[0].childNodes[0].setAttribute('selected', false);
     directions[1].childNodes[0].classList.remove('directionSelected');
     directions[1].childNodes[0].setAttribute('selected', false);
+}
+
+/* Adjacencies */
+function getAdjacencies(country) {
+    let adjacencies = [];
+    let data = [];
+    controller.getGraph().getLocations().get(country).forEach(e => {
+        data.push(e.edge)
+        data.push(e.cost);
+
+        for (let i = 0; i < environment.childNodes.length; i++) {
+            if (environment.childNodes[i].innerText == e.edge) {
+                data.push(environment.childNodes[i].getAttribute('x'));
+                data.push(environment.childNodes[i].getAttribute('y'));
+            }
+        }
+
+        adjacencies.push(data);
+        data = [];
+    });
+    return adjacencies;
+}
+
+function filterAdjacency(country) {
+    let adjacencies = getAdjacencies(country);
+    let nameAdjacencyList = buildNameAdjacencyList(adjacencies);
+    console.log(nameAdjacencyList);
+
+    // Remove vertex
+    environment.childNodes.forEach(e => {
+        if (!nameAdjacencyList.includes(e.innerText) && e.innerText != country) {
+            e.style.display = 'none';
+        }
+    });
+
+
+    // Remove SVG line
+    for (let i = 0; i < svg.childNodes.length; i++) {
+        if (svg.childNodes[i].tagName == 'line') {
+            let connectionList = svg.childNodes[i].getAttribute('connections').split(';');
+            if (svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0] != country) {
+                svg.childNodes[i].style.display = 'none';
+            }
+        }
+    }
+}
+
+function buildNameAdjacencyList(adjacencies) {
+    let data = [];
+    adjacencies.forEach(e => { data.push(e[0]) });
+    return data;
 }
