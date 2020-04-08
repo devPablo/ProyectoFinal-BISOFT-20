@@ -7,7 +7,6 @@ class Graph {
         this.nVertices =  pnVertices
         this.locations = new Map();
     }
-
     getNVertices(){
         return this.nVertices;
     }
@@ -29,7 +28,7 @@ class Graph {
     //True: Existe, False: No existe 
     valNewVertice(newVertice) { 
         (this.getLocations().get(newVertice) == 'undefined') ? false : true;
-    }
+    } 
 
     //Esta función permite añadir un vertice con su lista de 
     //aristas adyacentes (inicialmente vacia)
@@ -87,7 +86,7 @@ class Graph {
   
             // print the vertex and its adjacency list 
             console.log("Vertice origen: " + i + " ---> " + conc); 
-        } 
+        }
     } 
     
     // bfs(v) 
