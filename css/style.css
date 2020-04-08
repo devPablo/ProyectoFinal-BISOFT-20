@@ -47,7 +47,7 @@ body {
 /* Edge Form */
 #edgeForm {
     position: absolute;
-    display: inline-block;
+    display: none;
     background-color: #34353d;
     padding: 35px;
     left: 50%;
@@ -82,6 +82,10 @@ body {
     text-align: center;
 }
 
+.directionSelected {
+    background-color: teal !important;
+}
+
 .fas {
     font-size: 20px;
     padding: 15px;
@@ -97,4 +101,29 @@ body {
 
 .fa-arrows-alt-h {
     color: red;
+}
+
+#btnCreateEdge {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    border: 2px solid #26A69A;
+    color: #26A69A;
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: ease .3s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+#btnCreateEdge:hover {
+    background-color: #26A69A;
+    color: #FFF;
+}
+
+#divBtnCreateEdge {
+    text-align: center;
+    margin-top: 50px;
 }

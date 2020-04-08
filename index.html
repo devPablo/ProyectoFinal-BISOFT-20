@@ -11,12 +11,13 @@
     <div id="edgeForm">
        <div>
           <label class="lbl">Costo</label>
-          <input type="text">
+          <input type="number" min="1" id="inputCost">
        </div>
        <div id="divDirection">
-          <div class="direction"><i class="fas fa-long-arrow-alt-right"></i></div>
-          <div class="direction"><i class="fas fa-arrows-alt-h"></i></div>
+          <div class="direction" selected="false"><i class="fas fa-long-arrow-alt-right"></i></div>
+          <div class="direction" selected="false"><i class="fas fa-arrows-alt-h"></i></div>
        </div>
+       <div id="divBtnCreateEdge"><button type="button" id="btnCreateEdge">Create Edge</button></div>
     </div>
 
 
