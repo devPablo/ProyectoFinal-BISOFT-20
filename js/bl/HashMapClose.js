@@ -25,12 +25,32 @@ class HashMapClose {
     get(pkey){
         //pkey: Puede ser USA
         //Se llama a la funcion de Hash para conocer la posición y retorna la Location
-        return this.getLocations()[this.hash(pkey)];
+        return this.hash(pkey);
     }
 
     //La funcion de hash recibe la llave y devuelve la posición del arreglo
     hash(pkey){
-        return pkey.charCodeAt()%25;
+        let cont = 0;
+        for (i = 0; i<pkey.length; i++){
+            switch(pkey[i]){
+                case 'A':
+                    cont = 1;
+                break;
+                case 'E':
+                    cont = 2;
+                break;
+                case 'I':
+                    cont = 3;
+                break;
+                case 'O':
+                    cont = 4;
+                break;
+                case 'U':
+                    cont = 5;
+                break;   
+            }
+        } 
+        return (pkey.charCodeAt()%50+cont);
     }
 
     //Setea un edge en la posición del arreglo que le llama
