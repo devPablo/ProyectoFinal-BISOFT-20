@@ -33,7 +33,7 @@ document.querySelector('body').addEventListener('keydown', (e) => {
             closeEdgeForm();
         }
         closeAdjacencyForm();
-        
+
     }
 });
 
@@ -95,6 +95,7 @@ function createEdge(source, destination, cost, bidirectional) {
     let line;
     let connections = source.innerText + ',' + destination.innerText + ';';
     if (bidirectional == 'true') {
+        bidirectional = true;
         connections = source.innerText + ',' + destination.innerText + ';' + '' + destination.innerText + ',' + source.innerText + ';';
         line = `<line class="edge bidirectional" x1="${parseInt(source.getAttribute('x'))}" y1="${parseInt(source.getAttribute('y'))}" x2="${parseInt(destination.getAttribute('x'))}" y2="${parseInt(destination.getAttribute('y'))}" cost="${cost}" connections="${connections}" />`
     } else {
@@ -159,7 +160,7 @@ function resetDirectionSelected() {
 function getAdjacencies(country) {
     let adjacencies = [];
     let data = [];
-    controller.getGraph().getLocations().get(country).forEach(e => {
+    controller.getGraph().getLocations().get(country).edge.forEach(e => {
         data.push(e.edge)
         data.push(e.cost);
 
@@ -191,8 +192,16 @@ function filterAdjacency(country) {
     // Remove SVG line
     for (let i = 0; i < svg.childNodes.length; i++) {
         if (svg.childNodes[i].tagName == 'line') {
-            if (svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0] != country) {
+            if ((svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0] != country) && (svg.childNodes[i].getAttribute('connections').length < 12)) {
                 svg.childNodes[i].style.display = 'none';
+            } else {
+                let data = [];
+                svg.childNodes[i].getAttribute('connections').split(';').forEach(e => {
+                    e.split(',').forEach(f => { data.push(f) });
+                });
+                if (!data.includes(country)) {
+                    svg.childNodes[i].style.display = 'none';
+                }
             }
         }
     }
@@ -208,7 +217,7 @@ function buildNameAdjacencyList(adjacencies) {
     return data;
 }
 
-/* Show Adjacency Form */ 
+/* Show Adjacency Form */
 function showAdjacencyForm() {
     adjacencyForm.style.display = 'inline-block';
     document.querySelector('#inputAdjacencyCountry').focus();
