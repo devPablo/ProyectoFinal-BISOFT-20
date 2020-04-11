@@ -3,6 +3,7 @@ class HashMapClose {
     { 
         this.key = pkeys
         this.locations = plocations
+        this.matrix = new Matrix();
     }
 
     getKeys(){
@@ -19,6 +20,14 @@ class HashMapClose {
 
     setLocations(plocations){
         this.locations = plocations;
+    }
+
+    getMatrix(){
+        return this.matrix;
+    }
+
+    setMatrix(pmatrix){
+        this.matrix = pmatrix;
     }
 
     //La funcion get recibe la llave y devuelve los valores {BR, egde}
@@ -55,7 +64,9 @@ class HashMapClose {
 
     //Setea un edge en la posición del arreglo que le llama
     push(pkey, pnewedge){
+        //pkey es la llave: {USA}, pnewedge es el objeto Edge: { BR, 100 }
         this.getLocations()[this.hash(pkey)].getEdge().push(pnewedge);
+        this.getMatrix().pushEdge(this.hash(pkey), this.hash(pnewedge.getEdge()), pnewedge.getCost());
     }
 
     set(pnewvertice, pvalues){
