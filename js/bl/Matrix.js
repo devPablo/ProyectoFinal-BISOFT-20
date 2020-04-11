@@ -1,7 +1,15 @@
 class Matrix { 
     constructor() 
     { 
-        this.matrix = [50][50];
+        this.matrix = new Array(50);
+        this.fillMatrix();
+
+    }
+
+    fillMatrix(){
+        for (let index = 0; index < 50; index++) {
+            this.getMatrix()[index] = new Array(50);
+        }
     }
 
     getMatrix(){
