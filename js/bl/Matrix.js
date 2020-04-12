@@ -21,7 +21,6 @@ class Matrix {
     }
 
     pushEdge(oindex, dindex, cost){
-        this.getMatrix()[dindex][oindex] = cost;
+        this.getMatrix()[oindex][dindex] = cost;
     }
-
 }

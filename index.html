@@ -12,6 +12,11 @@
    <div id="countryAdjacency">
       <button type="button" id="showAdjacencies">Show Adjacencies</button>
    </div>
+
+   <div id="countryShortestPath">
+      <button type="button" id="showShortestPath">Show Shortest Path</button>
+   </div>
+
    <div id="environment"></div>
    <div id="edgeForm">
       <div>
@@ -28,9 +33,23 @@
    <div id="adjacencyForm">
       <div>
          <label class="lbl">Country</label>
-         <input type="text" id="inputAdjacencyCountry">
+         <input type="text" id="inputAdjacencyCountry" placeholder="Country Code">
       </div>
       <div id="divBtnShowAdjacencies"><button type="button" id="btnShowAdjacencies">Show Adjacencies</button></div>
+   </div>
+
+   <div id="shortestPathForm">
+      <div>
+         <div style="position: relative;">
+            <label class="lbl">Origin</label>
+            <input type="text" id="inputShortestPathCountryOrigin" placeholder="Country Code">
+         </div>
+         <div style="position: relative;">
+            <label class="lbl">Destination</label>
+            <input type="text" id="inputShortestPathCountryDestination" placeholder="Country Code">
+         </div>
+      </div>
+      <div id="divBtnShowShortestPath"><button type="button" id="btnShowShortestPath">Show Shortest Path</button></div>
    </div>
 
 
@@ -674,6 +693,7 @@
          style="fill:#f2f2f2;fill-rule:evenodd" />
    </svg>
    <script src="https://kit.fontawesome.com/a4e5821cc7.js" crossorigin="anonymous"></script>
+   <script src="js/bl/Matrix.js"></script>
    <script src="js/bl/Edge.js"></script>
    <script src="js/bl/Graph.js"></script>
    <script src="js/bl/HashMapClose.js"></script>

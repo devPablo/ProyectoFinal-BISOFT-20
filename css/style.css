@@ -150,7 +150,7 @@ body {
 
 #countryAdjacency {
     position: absolute;
-    width: 100%;
+    left: 0;
 }
 
 #countryAdjacency button {
@@ -164,7 +164,6 @@ body {
     font-weight: bold;
     cursor: pointer;
     font-size: 16px;
-    width: 100%;
 }
 
 .disable {
@@ -205,4 +204,80 @@ body {
 #divBtnShowAdjacencies {
     text-align: center;
     margin-top: 50px;
+}
+
+/* Shortest Path */
+#countryShortestPath {
+    position: absolute;
+    right: 0
+}
+
+#countryShortestPath button {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    border: 2px solid #26A69A;
+    color: #26A69A;
+    padding: 10px 30px;
+    transition: ease .3s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#countryShortestPath button:hover {
+    background-color: #26A69A;
+    color: #FFF;
+}
+
+/* Shortest Path Form */
+#shortestPathForm {
+    position: absolute;
+    display: none;
+    background-color: #34353d;
+    padding: 35px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
+#shortestPathForm label {
+    position: absolute;
+    top: -2.5px;
+    left: 20px;
+}
+
+#shortestPathForm input {
+    padding: 10px;
+    margin: 20px;
+    outline: 0;
+    font-size: 20px;
+    border-radius: 4px;
+    border: 0;
+}
+
+#divBtnShowShortestPath {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#btnShowShortestPath {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    border: 2px solid #26A69A;
+    color: #26A69A;
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: ease .3s;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+#divBtnShowShortestPath button:hover {
+    background-color: #26A69A;
+    color: #FFF;
 }

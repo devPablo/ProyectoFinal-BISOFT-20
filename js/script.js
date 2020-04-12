@@ -6,12 +6,15 @@ const btnCreateEdge = document.querySelector('#btnCreateEdge');
 
 /* FLAGS */
 let FLAG_ADJACENCIES = false;
+let FLAG_SHORTEST_PATH = false;
 
 btnCreateEdge.addEventListener('click', () => {
     executeBtnCreateEdge();
 });
 const inputCost = document.querySelector('#inputCost');
 const directions = document.querySelectorAll('.direction');
+
+/* Adjacency Form */
 const adjacencyForm = document.querySelector('#adjacencyForm');
 const btnShowAdjacencies = document.querySelector('#btnShowAdjacencies');
 btnShowAdjacencies.addEventListener('click', () => {
@@ -27,13 +30,30 @@ showAdjancencies.addEventListener('click', () => {
     }
 });
 
+/* Shortest Path Form */
+const shortestPathForm = document.querySelector('#shortestPathForm');
+const btnShowShortestPath = document.querySelector('#btnShowShortestPath');
+const showShortestPath = document.querySelector('#showShortestPath');
+btnShowShortestPath.addEventListener('click', () => {
+    let data = executeDijkstra();
+    showDijkstraPath(data);
+});
+showShortestPath.addEventListener('click', () => {
+    if (FLAG_SHORTEST_PATH) {
+        showAllMap();
+    } else {
+        showShortestPathForm();
+    }
+});
+
+
 document.querySelector('body').addEventListener('keydown', (e) => {
     if (e.key == 'Escape') {
         if (edgeForm.style.display == 'inline-block') {
-            closeEdgeForm();
+            closeEdgeForm();            
         }
         closeAdjacencyForm();
-
+        closeShortestPathsForm();
     }
 });
 
@@ -231,8 +251,13 @@ function closeAdjacencyForm() {
 /* Show Entire Map (Vertex & Edge) */
 function showAllMap() {
     FLAG_ADJACENCIES = false;
+    FLAG_SHORTEST_PATH = false;
+
     showAdjancencies.classList.remove('disable');
     showAdjancencies.innerText = 'Show Adjacencies';
+
+    showShortestPath.classList.remove('disable');
+    showShortestPath.innerText = 'Show Shortest Path';
 
     environment.childNodes.forEach(e => {
         e.style.display = 'inline-block';
@@ -243,4 +268,56 @@ function showAllMap() {
             e.style.display = 'inline-block';
         }
     });
+}
+
+/* Dijkstra */
+
+function setAdjacencyMatrix() {
+    let matrix = controller.getGraph().getLocations().matrix;
+    for (let i = 0; i < 50; i++) {
+        for (let j = 0; j < 50; j++) {
+            if (matrix.matrix[i][j] == undefined) {
+                matrix.matrix[i][j] = Infinity;
+            }
+        }
+    }
+}
+
+function executeDijkstra() {
+    setAdjacencyMatrix();
+    let originCode = document.querySelector('#inputShortestPathCountryOrigin').value;
+    let destinationCode = document.querySelector('#inputShortestPathCountryDestination').value;
+
+    let origin = controller.getGraph().getLocations().hash(originCode);
+    let destination = controller.getGraph().getLocations().hash(destinationCode);
+
+    let matrix = controller.getGraph().getLocations().matrix.matrix;
+
+    var shortestPathInfo = controller.dijkstra(matrix, matrix.length, origin);
+    var path = controller.dijkstraBuildPath(shortestPathInfo, destination);
+    closeShortestPathsForm();
+    return path;
+}
+
+function showDijkstraPath(data) {
+    console.log(data);
+
+
+
+
+    FLAG_SHORTEST_PATH = true;
+    showShortestPath.classList.add('disable');
+    showShortestPath.innerText = 'Quit Shortest Path';
+}
+
+/* Show Shortest Path Form */
+function showShortestPathForm() {
+    shortestPathForm.style.display = 'inline-block';
+    document.querySelector('#inputShortestPathCountryOrigin').focus();
+}
+
+function closeShortestPathsForm() {
+    document.querySelector('#inputShortestPathCountryOrigin').value = '';
+    document.querySelector('#inputShortestPathCountryDestination').value = '';
+    shortestPathForm.style.display = 'none';
 }
