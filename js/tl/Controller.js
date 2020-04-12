@@ -32,6 +32,18 @@ class Controller {
         return -2; // Solo se puede enlazar de destino hacia origen
     }
 
+    getGraphCountryEdge(country) {
+        return this.graph.getLocations().get(country).edge;
+    }
+    
+    getGlobalMatrix() {
+        return this.graph.getLocations().getMatrix().getMatrix();
+    }
+
+    hash(key) {
+        return this.graph.getLocations().hash(key)
+    }
+
     print() {
         this.getGraph().printGraph();
     }
