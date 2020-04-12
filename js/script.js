@@ -50,7 +50,7 @@ showShortestPath.addEventListener('click', () => {
 document.querySelector('body').addEventListener('keydown', (e) => {
     if (e.key == 'Escape') {
         if (edgeForm.style.display == 'inline-block') {
-            closeEdgeForm();            
+            closeEdgeForm();
         }
         closeAdjacencyForm();
         closeShortestPathsForm();
@@ -285,8 +285,8 @@ function setAdjacencyMatrix() {
 
 function executeDijkstra() {
     setAdjacencyMatrix();
-    let originCode = document.querySelector('#inputShortestPathCountryOrigin').value;
-    let destinationCode = document.querySelector('#inputShortestPathCountryDestination').value;
+    let originCode = document.querySelector('#inputShortestPathCountryOrigin').value.toUpperCase();
+    let destinationCode = document.querySelector('#inputShortestPathCountryDestination').value.toUpperCase();
 
     let origin = controller.getGraph().getLocations().hash(originCode);
     let destination = controller.getGraph().getLocations().hash(destinationCode);
@@ -296,13 +296,58 @@ function executeDijkstra() {
     var shortestPathInfo = controller.dijkstra(matrix, matrix.length, origin);
     var path = controller.dijkstraBuildPath(shortestPathInfo, destination);
     closeShortestPathsForm();
+    path.unshift(origin);
     return path;
 }
 
 function showDijkstraPath(data) {
-    console.log(data);
+    let vertex = [];
+    data.forEach(e => {
+        vertex.push(parseInt(e));
+    });
 
+    environment.childNodes.forEach(e => {
+        if (!vertex.includes(controller.getGraph().getLocations().hash(e.innerText))) {
+            e.style.display = 'none';
+        }
+    });
 
+    // Remove SVG line
+    let lineToShow = [];
+
+    for (let j = 0, k = 1; j < vertex.length; j++, k++) {
+        for (let i = 0; i < svg.childNodes.length; i++) {
+            console.log('j:', vertex[j], ' k: ', vertex[k]);
+            if (svg.childNodes[i].tagName == 'line') {
+                console.log(controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0]), controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[1]));
+                if ((controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[0]) == vertex[j]) &&
+                    (controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[1]) == vertex[k])) {
+                    if (!lineToShow.includes(svg.childNodes[i])) {
+                        lineToShow.push(svg.childNodes[i]);
+                    }
+                } else {
+                    if (svg.childNodes[i].getAttribute('connections').length == 12) {
+                        console.log('11');
+                        if ((controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[1].split(',')[0]) == vertex[j]) &&
+                            (controller.getGraph().getLocations().hash(svg.childNodes[i].getAttribute('connections').split(';')[1].split(',')[1]) == vertex[k])) {
+                            console.log('in');
+                            if (!lineToShow.includes(svg.childNodes[i])) {
+                                lineToShow.push(svg.childNodes[i]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    svg.childNodes.forEach(e => {
+        if (e.tagName == 'line') {
+            if (!lineToShow.includes(e)) {
+                e.style.display = 'none';
+            }
+        }
+    });
 
 
     FLAG_SHORTEST_PATH = true;
