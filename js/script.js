@@ -3,6 +3,7 @@ let paths = Array.from(svg.getElementsByTagName("path"));
 const environment = document.querySelector('#environment');
 const edgeForm = document.querySelector('#edgeForm');
 const btnCreateEdge = document.querySelector('#btnCreateEdge');
+const table = document.querySelector('#table');
 
 /* FLAGS */
 let FLAG_ADJACENCIES = false;
@@ -41,6 +42,8 @@ btnShowShortestPath.addEventListener('click', () => {
 showShortestPath.addEventListener('click', () => {
     if (FLAG_SHORTEST_PATH) {
         showAllMap();
+        document.querySelector('#divTable').style.display = 'none';
+        document.querySelector('#tableBody').innerHTML = '';
     } else {
         showShortestPathForm();
     }
@@ -302,6 +305,9 @@ function executeDijkstra() {
 
 function showDijkstraPath(data) {
     let vertex = [];
+    let countries = [];
+    let costs = [];
+
     data.forEach(e => {
         vertex.push(parseInt(e));
     });
@@ -309,6 +315,8 @@ function showDijkstraPath(data) {
     environment.childNodes.forEach(e => {
         if (!vertex.includes(controller.hash(e.innerText))) {
             e.style.display = 'none';
+        } else {
+            countries.push(e.innerText);
         }
     });
 
@@ -322,6 +330,7 @@ function showDijkstraPath(data) {
                     (controller.hash(svg.childNodes[i].getAttribute('connections').split(';')[0].split(',')[1]) == vertex[k])) {
                     if (!lineToShow.includes(svg.childNodes[i])) {
                         lineToShow.push(svg.childNodes[i]);
+                        costs.push(svg.childNodes[i].getAttribute('cost'));
                     }
                 } else {
                     if (svg.childNodes[i].getAttribute('connections').length == 12) {
@@ -329,6 +338,7 @@ function showDijkstraPath(data) {
                             (controller.hash(svg.childNodes[i].getAttribute('connections').split(';')[1].split(',')[1]) == vertex[k])) {
                             if (!lineToShow.includes(svg.childNodes[i])) {
                                 lineToShow.push(svg.childNodes[i]);
+                                costs.push(svg.childNodes[i].getAttribute('cost'));
                             }
                         }
                     }
@@ -345,7 +355,7 @@ function showDijkstraPath(data) {
         }
     });
 
-
+    buildDijkstraTable(countries, costs);
     FLAG_SHORTEST_PATH = true;
     showShortestPath.classList.add('disable');
     showShortestPath.innerText = 'Quit Shortest Path';
@@ -361,4 +371,26 @@ function closeShortestPathsForm() {
     document.querySelector('#inputShortestPathCountryOrigin').value = '';
     document.querySelector('#inputShortestPathCountryDestination').value = '';
     shortestPathForm.style.display = 'none';
+}
+
+function buildDijkstraTable(countries, costs) {
+    document.querySelector('#divTable').style.display = 'inline-block';
+    for (let i = 0; i < costs.length; i++) {
+        let tr = document.createElement('tr');
+
+        let tdOrigin = document.createElement('td');
+        tdOrigin.innerText = countries[i];
+        
+        let tdDestination = document.createElement('td');
+        tdDestination.innerText = countries[i+1];
+        
+        let tdCost = document.createElement('td');
+        tdCost.innerText = costs[i];
+
+        tr.appendChild(tdOrigin);
+        tr.appendChild(tdDestination);
+        tr.appendChild(tdCost);
+
+        document.querySelector('#tableBody').appendChild(tr);
+    }
 }

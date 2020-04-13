@@ -281,3 +281,29 @@ body {
     background-color: #26A69A;
     color: #FFF;
 }
+
+/* Dijkstra Table */
+#divTable {
+    width: 100%;
+    display: 'none';
+    margin-bottom: 25px;
+}
+
+#table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#table th, td {
+    padding: 15px;
+    width: 10%;
+}
+
+#table thead tr {
+    background-color: rgb(212, 212, 212);
+}
+
+#table tr:nth-child(even) {
+    background-color: rgb(212, 212, 212);
+} 
