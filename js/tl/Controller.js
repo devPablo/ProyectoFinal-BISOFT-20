@@ -37,7 +37,7 @@ class Controller {
     }
 
     getGraphCountryEdge(country) {
-        return this.getGraph().getLocations().get(country).edge;
+        return this.getGraph().getLocations().get(country).getEdge();
     }
     
     getGlobalMatrix() {
