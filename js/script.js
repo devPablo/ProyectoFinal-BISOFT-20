@@ -8,6 +8,7 @@ const table = document.querySelector('#table');
 /* FLAGS */
 let FLAG_ADJACENCIES = false;
 let FLAG_SHORTEST_PATH = false;
+let FLAG_COUNTRY_FIND = false;
 
 btnCreateEdge.addEventListener('click', () => {
     executeBtnCreateEdge();
@@ -47,6 +48,22 @@ showShortestPath.addEventListener('click', () => {
     }
 });
 
+/* Find Country */
+const countryFindForm = document.querySelector('#countryFindForm');
+const btnShowCountryFind = document.querySelector('#btnShowCountryFind');
+const showCountryFind = document.querySelector('#showCountryFind');
+btnShowCountryFind.addEventListener('click', () => {
+    filterCountryFind(document.querySelector('#inputCountryFind').value.toUpperCase());
+    closeCountryFindForm();
+});
+showCountryFind.addEventListener('click', () => {
+    if (FLAG_COUNTRY_FIND) {
+        showAllMap();
+    } else {
+        showCountryFindForm();
+    }
+});
+
 
 document.querySelector('body').addEventListener('keydown', (e) => {
     if (e.key == 'Escape') {
@@ -55,6 +72,7 @@ document.querySelector('body').addEventListener('keydown', (e) => {
         }
         closeAdjacencyForm();
         closeShortestPathsForm();
+        closeCountryFindForm();
     }
 });
 
@@ -255,12 +273,16 @@ function closeAdjacencyForm() {
 function showAllMap() {
     FLAG_ADJACENCIES = false;
     FLAG_SHORTEST_PATH = false;
+    FLAG_COUNTRY_FIND = false;
 
     showAdjancencies.classList.remove('disable');
     showAdjancencies.innerText = 'Show Adjacencies';
 
     showShortestPath.classList.remove('disable');
     showShortestPath.innerText = 'Show Shortest Path';
+
+    showCountryFind.classList.remove('disable');
+    showCountryFind.innerText = 'Show Find Country';
 
     environment.childNodes.forEach(e => {
         e.style.display = 'inline-block';
@@ -427,4 +449,33 @@ function buildTable() {
 
         document.querySelector('#tableBody').appendChild(tr);
     }
+}
+
+/* Show Country Find Form */
+function showCountryFindForm() {
+    countryFindForm.style.display = 'inline-block';
+    document.querySelector('#inputCountryFind').focus();
+}
+
+function closeCountryFindForm() {
+    document.querySelector('#inputCountryFind').value = '';
+    countryFindForm.style.display = 'none';
+}
+
+function filterCountryFind(data) {
+    environment.childNodes.forEach(e => {
+        if (e.innerText != data) {
+            e.style.display = 'none';
+        }
+    });
+
+    svg.childNodes.forEach(e => {
+        if (e.tagName == 'line') {
+            e.style.display = 'none';
+        }
+    });
+
+    FLAG_COUNTRY_FIND = true;
+    showCountryFind.classList.add('disable');
+    showCountryFind.innerText = 'Quit Find Country';
 }
