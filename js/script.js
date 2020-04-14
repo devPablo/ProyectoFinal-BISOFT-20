@@ -42,8 +42,6 @@ btnShowShortestPath.addEventListener('click', () => {
 showShortestPath.addEventListener('click', () => {
     if (FLAG_SHORTEST_PATH) {
         showAllMap();
-        document.querySelector('#divTable').style.display = 'none';
-        document.querySelector('#tableBody').innerHTML = '';
     } else {
         showShortestPathForm();
     }
@@ -378,6 +376,7 @@ function closeShortestPathsForm() {
 
 function buildDijkstraTable(countries, costs) {
     document.querySelector('#divTable').style.display = 'inline-block';
+    document.querySelector('#tableBody').innerHTML = '';
     for (let i = 0; i < costs.length; i++) {
         let tr = document.createElement('tr');
 
@@ -409,15 +408,17 @@ function buildTable() {
         });
     });
 
+    console.log(countries, costs);
+
     document.querySelector('#tableBody').innerHTML = '';
-    for (let i = 0; i < costs.length; i++) {
+    for (let i = 0, j = 0; i < costs.length; i++, j += 2) {
         let tr = document.createElement('tr');
 
         let tdOrigin = document.createElement('td');
-        tdOrigin.innerText = countries[i];
+        tdOrigin.innerText = countries[j];
         
         let tdDestination = document.createElement('td');
-        tdDestination.innerText = countries[i+1];
+        tdDestination.innerText = countries[j+1];
         
         let tdCost = document.createElement('td');
         tdCost.innerText = costs[i];
