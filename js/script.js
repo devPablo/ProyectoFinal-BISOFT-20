@@ -19,7 +19,7 @@ const directions = document.querySelectorAll('.direction');
 const adjacencyForm = document.querySelector('#adjacencyForm');
 const btnShowAdjacencies = document.querySelector('#btnShowAdjacencies');
 btnShowAdjacencies.addEventListener('click', () => {
-    filterAdjacency(document.querySelector('#inputAdjacencyCountry').value);
+    filterAdjacency(document.querySelector('#inputAdjacencyCountry').value.toUpperCase());
     closeAdjacencyForm();
 });
 const showAdjancencies = document.querySelector('#showAdjacencies');
