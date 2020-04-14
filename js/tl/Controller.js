@@ -32,6 +32,10 @@ class Controller {
         return -2; // Solo se puede enlazar de destino hacia origen
     }
 
+    findLocation(country) {
+        return this.graph.getLocations().get(country);
+    }
+
     getGraphCountryEdge(country) {
         return this.graph.getLocations().get(country).edge;
     }

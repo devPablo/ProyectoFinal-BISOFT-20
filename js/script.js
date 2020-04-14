@@ -74,6 +74,7 @@ let selectedVertex = [];
 let controller = new Controller(25);
 
 updatePathsListener();
+buildTable();
 
 function createVertex(x, y, ele) {
     let repeated = false;
@@ -128,6 +129,7 @@ function createEdge(source, destination, cost, bidirectional) {
     updatePathsListener();
 
     controller.addNewEdge(source.innerText, destination.innerText, cost, bidirectional);
+    buildTable();
 }
 
 
@@ -271,6 +273,7 @@ function showAllMap() {
             e.style.display = 'inline-block';
         }
     });
+    buildTable();
 }
 
 /* Dijkstra */
@@ -375,6 +378,38 @@ function closeShortestPathsForm() {
 
 function buildDijkstraTable(countries, costs) {
     document.querySelector('#divTable').style.display = 'inline-block';
+    for (let i = 0; i < costs.length; i++) {
+        let tr = document.createElement('tr');
+
+        let tdOrigin = document.createElement('td');
+        tdOrigin.innerText = countries[i];
+        
+        let tdDestination = document.createElement('td');
+        tdDestination.innerText = countries[i+1];
+        
+        let tdCost = document.createElement('td');
+        tdCost.innerText = costs[i];
+
+        tr.appendChild(tdOrigin);
+        tr.appendChild(tdDestination);
+        tr.appendChild(tdCost);
+
+        document.querySelector('#tableBody').appendChild(tr);
+    }
+}
+
+function buildTable() {
+    let countries = [];
+    let costs = [];
+    environment.childNodes.forEach(e => {
+        controller.findLocation(e.innerText).edge.forEach(f => {
+            countries.push(e.innerText);
+            countries.push(f.edge);
+            costs.push(f.cost);
+        });
+    });
+
+    document.querySelector('#tableBody').innerHTML = '';
     for (let i = 0; i < costs.length; i++) {
         let tr = document.createElement('tr');
 
