@@ -408,8 +408,6 @@ function buildTable() {
         });
     });
 
-    console.log(countries, costs);
-
     document.querySelector('#tableBody').innerHTML = '';
     for (let i = 0, j = 0; i < costs.length; i++, j += 2) {
         let tr = document.createElement('tr');
