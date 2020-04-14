@@ -33,19 +33,19 @@ class Controller {
     }
 
     findLocation(country) {
-        return this.graph.getLocations().get(country);
+        return this.getGraph().getLocations().get(country);
     }
 
     getGraphCountryEdge(country) {
-        return this.graph.getLocations().get(country).edge;
+        return this.getGraph().getLocations().get(country).edge;
     }
     
     getGlobalMatrix() {
-        return this.graph.getLocations().getMatrix().getMatrix();
+        return this.getGraph().getLocations().getMatrix().getMatrix();
     }
 
     hash(key) {
-        return this.graph.getLocations().hash(key)
+        return this.getGraph().getLocations().hash(key)
     }
 
     print() {

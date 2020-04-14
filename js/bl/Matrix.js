@@ -2,7 +2,7 @@ class Matrix {
     constructor() 
     { 
         this.matrix = new Array(50);
-        this.fillMatrix();
+        this.fillMatrix(); 
 
     }
 
