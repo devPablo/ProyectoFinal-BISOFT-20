@@ -479,3 +479,31 @@ function filterCountryFind(data) {
     showCountryFind.classList.add('disable');
     showCountryFind.innerText = 'Quit Find Country';
 }
+
+function test1() {
+    let repeated = [];
+    environment.childNodes.forEach(e => {
+        environment.childNodes.forEach(f => {
+            if (e.innerText != f.innerText) {
+                if (controller.hash(e.innerText) == controller.hash(f.innerText)) {
+                    let tmp = [];
+                    tmp.push(e.innerText);
+                    tmp.push(f.innerText);
+                    repeated.push(tmp);
+                }
+            }
+        });
+    });
+    return repeated;
+}
+
+function clickSVG() {
+    let countries = ['US', 'CA', 'CR', 'ES', 'IR', 'RU', 'NG', 'MG', 'AU', 'NO', 'DO', 'NA', 'BR', 'PA', 'IE', 'SY', 'TW', 'PG', 'AO'];
+    svg.childNodes.forEach(e => {
+        if (e.tagName == 'path') {
+            if (countries.includes(e.getAttribute('data-id'))) {
+                e.style.fill = '#BEBEBE';
+            }
+        }
+    }); 
+}
